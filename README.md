@@ -64,7 +64,7 @@ These are the iOS Safari behaviours the code works around. Each comes from WebKi
 
   ### What I saw on my iPhone
 
-Tested on iPhone, IOS 26.6.1, in Safari.
+Tested on iPhone, iOS 26.6.1, in Safari.
 - **Normal dictation:** worked. The transcript showed live while I spoke, and Copy pasted correctly into Notes.
 - **Long input (30+ seconds):** kept listening the whole time without cutting off.
 - **Pauses:** with `continuous = true`, a ~5 second pause didn't end the session. It picked up where I left off.
