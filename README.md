@@ -57,7 +57,7 @@ These are the iOS Safari behaviours the code works around. Each comes from WebKi
 4. **Must start from a tap.** `recognition.start()` has to run synchronously inside the click handler. Calling it after an `await` or a timer is refused.
 5. **`no-speech` is unreliable.** iOS often just ends the session quietly instead of firing `no-speech`. The demo adds its own timeout and treats "ended with an empty transcript" as no speech.
 6. **Duplicated results with `continuous = true`.** Some iOS versions resend earlier results, or return a final result that already contains the previous ones. The demo rebuilds the transcript from `event.results` on every event, and drops a final result that repeats or contains the text before it, instead of blindly appending.
-7. **Sessions end on their own.** Even in continuous mode, Safari stops after a pause or a time limit. The UI listens for `end` rather than assuming the session lasts until the user taps stop.
+7. **Sessions can end on their own.** Older iOS versions were reported to stop after a pause or a time limit, even in continuous mode. In my testing on iOS 26 it didn't, but the UI still listens for `end` rather than assuming the session lasts until the user taps stop.
 8. **The last chunk may never be marked final.** On `end`, any leftover interim text is kept as final so the user's last words aren't lost.
 9. **Backgrounding kills the mic.** Switching apps or locking the phone stops capture. The demo stops cleanly on `visibilitychange` so the UI isn't stuck on "Listening".
 10. **In-app browsers and home-screen web apps.** WebViews inside other apps (Instagram, Gmail, and so on) and "Add to Home Screen" apps may not support it at all. The unsupported-browser message says to open the page in Safari.
