@@ -50,7 +50,6 @@ A sensible production setup is often **both**: Web Speech for instant on-screen 
 ## Safari quirks
 
 These are the iOS Safari behaviours the code works around. Each comes from WebKit docs, bug reports or developer write-ups.
-<!-- TODO: after testing on your own iPhone, mark which ones you saw and add anything new under "What I saw on my iPhone". -->
 
 1. **Prefixed only.** Safari exposes `webkitSpeechRecognition`, not `SpeechRecognition`, and only on iOS 14.5 and later.
 2. **It depends on Siri/Dictation.** If Dictation is turned off on the phone, recognition fails with `service-not-allowed` even when mic permission is granted. That's why the demo treats it as its own error with its own fix.
@@ -63,11 +62,14 @@ These are the iOS Safari behaviours the code works around. Each comes from WebKi
 9. **Backgrounding kills the mic.** Switching apps or locking the phone stops capture. The demo stops cleanly on `visibilitychange` so the UI isn't stuck on "Listening".
 10. **In-app browsers and home-screen web apps.** WebViews inside other apps (Instagram, Gmail, and so on) and "Add to Home Screen" apps may not support it at all. The unsupported-browser message says to open the page in Safari.
 
-### What I saw on my iPhone
-<!-- Fill in from real testing: iOS version, what the event log showed, which quirks you hit. -->
-- iOS version:
-- Quirks confirmed:
-- Anything surprising:
+  ### What I saw on my iPhone
+
+Tested on iPhone, IOS 26.6.1, in Safari.
+- **Normal dictation:** worked. The transcript showed live while I spoke, and Copy pasted correctly into Notes.
+- **Long input (30+ seconds):** kept listening the whole time without cutting off.
+- **Pauses:** with `continuous = true`, a ~5 second pause didn't end the session. It picked up where I left off.
+- **Silence:** showed "No speech detected" with the fix-it message, so the fallback works.
+- **Switching apps:** iOS stopped the mic, and the page ended cleanly instead of getting stuck on "Listening".
 
 ## Files
 
